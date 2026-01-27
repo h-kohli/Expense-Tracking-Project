@@ -23,14 +23,24 @@ with app.app_context():
     db.create_all()
 
 
-
+CATEGORIES = ["Food", "Transport", "Events", "Other"]
 
 
 @app.route("/")
 def index():
 
     expenses = Expense.query.order_by(Expense.date.desc(), Expense.id.desc()).all()
-    return render_template("index.html", expenses=expenses)
+    total = round(sum(e.amount for e in expenses), 2)
+
+    return render_template(
+
+        "index.html",
+
+        expenses=expenses,
+        categories=CATEGORIES,
+        total=total
+
+        )
 
 
 
