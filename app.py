@@ -86,9 +86,16 @@ def add():
 
 
 
+@app.route("/delete/<int:expense_id>" ,methods=['POST'])
+def delete(expense_id):
+    e = Expense.query.get_or_404(expense_id)
+    db.session.delete(e)
+    db.session.commit()
+    flash("Expense deleted", "success")
+    return redirect(url_for("index"))
 
-    print("Form received:", dict(request.form))
-    return make_response("Form received check the console")
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
